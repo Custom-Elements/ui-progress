@@ -1,0 +1,37 @@
+@import "../ui-styles/variables";
+
+:host {
+  display: inline-block;
+}
+
+#bar {
+  display: block;
+  position: fixed;
+  z-index: 999999;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: transparent;
+}
+
+#fill {
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: @red;
+  .transition(@transition);
+}
+
+#leader {
+  display: inline-block;
+  position: absolute;
+  min-width: 10px;
+  width: 1%;
+  right: 0;
+  height: 100%;
+  background: @red;
+  box-shadow: 0 0 10px @red;
+}
