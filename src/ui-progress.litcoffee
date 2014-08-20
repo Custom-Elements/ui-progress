@@ -17,13 +17,9 @@ upward.
         @$.fill.style.width = "#{@percentage}%"
         if Number(@percentage) >= 100 or Number(@percentage) <= 0
           @$.fill.setAttribute 'hide', ''
-          setTimeout =>
-            @percentage = 0
-          , TRICKLE_TIMER
-
         else
           @$.fill.removeAttribute 'hide'
-          setTimeout =>
+          @job 'progress', ->
             @percentage = Number(@percentage) + (Math.random() * TRICKLE_RATE)
           , TRICKLE_TIMER
 
@@ -33,13 +29,17 @@ Kick off progress visualization, resetting the percentage to 0 or the passed
 value.
 
       start: (percentage) ->
-        @percentage = percentage or 1
+        if not @stack
+          @percentage = 1
+        @stack += 1
 
 ###stop
 Finish out and fade away.
 
       stop: (percentage) ->
-        @percentage = 100
+        @stack -= 1 if @stack
+        if not @stack
+          @percentage = 100
 
 ##Event Handlers
 
@@ -50,6 +50,7 @@ Finish out and fade away.
       ready: ->
 
       attached: ->
+        @stack = 0
 
       domReady: ->
 
